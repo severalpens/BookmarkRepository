@@ -1,0 +1,205 @@
+﻿@page "/View/{BookmarkId:int}"
+
+@using Microsoft.EntityFrameworkCore
+
+@inject IDbContextFactory<BookmarkContext> DbFactory
+@inject IPageHelper PageHelper
+@inject EditSuccess EditSuccessState
+
+@if (NotFound && !Loading)
+{
+    <div class="alert alert-warning">A bookmark with that id doesn't exist.</div>
+}
+else
+{
+    @if (Bookmark is null || Loading)
+    {
+        <div class="alert alert-info">Loading...</div>
+    }
+    else
+    {
+        <h1>@Bookmark.Name</h1>
+        <br />
+        @if (EditSuccess)
+        {
+            <div class="alert alert-success">Successfully updated the bookmark.</div>
+        }
+        <hr />
+        <h3>@Bookmark.Url</h3>
+        <br />
+        <a class="btn btn-primary" title="Go Back" href="@PageHelper.Page">
+            🔙 Back to Grid
+        </a>
+        @if (!Deleted)
+        {
+            <a class="btn btn-primary" href="edit/@Bookmark.Id" title="Edit">Edit</a><span>&nbsp;</span>
+            @if (!ShowConfirmation)
+            {
+                <button class="btn btn-danger" @onclick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</button>
+            }
+            else
+            {
+                <br />
+                <br />
+                <DeletePrompt Confirmation="@(async result => await ConfirmAsync(result))" />
+            }
+        }
+        else
+        {
+            <div class="btn btn-danger">🚫 This item has been deleted.</div>
+        }
+    }
+}
+
+@code {
+    /// <summary>
+    /// Tracking of asynchronous calls.
+    /// </summary>
+    private bool Loading;
+
+    /// <summary>
+    /// Id from route of bookmark.
+    /// </summary>
+    [Parameter]
+    public int BookmarkId { get; set; }
+
+    /// <summary>
+    /// Navigation check.
+    /// </summary>
+    private int _lastBookmarkId;
+
+    /// <summary>
+    /// True with redirect from successful edit.
+    /// </summary>
+    [Parameter]
+    public bool EditSuccess { get; set; }
+
+    /// <summary>
+    /// Bookmark entity.
+    /// </summary>
+    private Bookmark? Bookmark { get; set; }
+
+    /// <summary>
+    /// Set to true when not found.
+    /// </summary>
+    private bool NotFound = false;
+
+    /// <summary>
+    /// Set to true when delete is requested.
+    /// </summary>
+    private bool ShowConfirmation = false;
+
+    /// <summary>
+    /// Set to true when delete is successful
+    /// </summary>
+    private bool Deleted = false;
+
+    /// <summary>
+    /// Navigated
+    /// </summary>
+    /// <returns>Task</returns>
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_lastBookmarkId != BookmarkId)
+        {
+            EditSuccess = EditSuccessState.Success;
+            EditSuccessState.Success = false;
+            _lastBookmarkId = BookmarkId;
+            await LoadBookmarkAsync();
+        }
+        await base.OnParametersSetAsync();
+    }
+
+    /// <summary>
+    /// Confirm deletion
+    /// </summary>
+    /// <param name="result">True when user confirmed</param>
+    /// <returns>Task</returns>
+    private async Task ConfirmAsync(bool result)
+    {
+        if (result)
+        {
+            await DeleteAsync();
+        }
+        else
+        {
+            ShowConfirmation = false;
+            EditSuccess = false;
+        }
+    }
+
+    /// <summary>
+    /// Loads the bookmark
+    /// </summary>
+    /// <returns>Task</returns>
+    private async Task LoadBookmarkAsync()
+    {
+        if (Loading)
+        {
+            return; //avoid concurrent requests
+        }
+
+        NotFound = false;
+        Bookmark = null;
+
+        Loading = true;
+
+        using var context = DbFactory.CreateDbContext();
+
+        if (context.Bookmarks is not null)
+        {
+            Bookmark = await context.Bookmarks
+                .AsNoTracking()
+                .SingleOrDefaultAsync(
+                    c => c.Id == BookmarkId);
+
+            if (Bookmark is null)
+            {
+                NotFound = true;
+            }
+        }
+
+        Loading = false;
+    }
+
+    /// <summary>
+    /// Deletes the bookmark.
+    /// </summary>
+    /// <returns>Task</returns>
+    private async Task DeleteAsync()
+    {
+        if (Loading)
+        {
+            return; // avoid concurrent requests
+        }
+
+        Loading = true;
+        using var context = DbFactory?.CreateDbContext();
+
+        if (context?.Bookmarks is not null)
+        {
+            var bookmark = await context.Bookmarks
+                .SingleOrDefaultAsync(c => c.Id == BookmarkId);
+
+            if (bookmark is not null)
+            {
+                context.Bookmarks?.Remove(bookmark);
+                await context.SaveChangesAsync();
+                Loading = false;
+                Deleted = true;
+            }
+            else
+            {
+                Loading = false;
+                // show not found
+                await LoadBookmarkAsync();
+            }
+        }
+        else
+        {
+            Loading = false;
+            // show not found
+            await LoadBookmarkAsync();
+        }
+    }
+}

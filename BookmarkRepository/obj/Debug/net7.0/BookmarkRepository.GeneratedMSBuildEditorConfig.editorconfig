@@ -1,0 +1,77 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = BookmarkRepository
+build_property.RootNamespace = BookmarkRepository
+build_property.ProjectDir = c:\Users\paulc\Documents\GitHub\BookmarkRepository\BookmarkRepository\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = c:\Users\paulc\Documents\GitHub\BookmarkRepository\BookmarkRepository
+build_property._RazorSourceGeneratorDebug = 
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/Pages/BookmarksView.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQm9va21hcmtzVmlldy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/Pages/EditBookmarkView.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdEJvb2ttYXJrVmlldy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/Pages/FileUpload1.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmlsZVVwbG9hZDEucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/Pages/FileUpload2.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmlsZVVwbG9hZDIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/Pages/NewBookmarkView.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmV3Qm9va21hcmtWaWV3LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/Pages/UploadBookmarksHtml.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXBsb2FkQm9va21hcmtzSHRtbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/Shared/LoginDisplay.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXExvZ2luRGlzcGxheS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-2et3ag8lhr
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-3af1ykf0ig
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/paulc/Documents/GitHub/BookmarkRepository/BookmarkRepository/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 

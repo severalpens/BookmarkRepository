@@ -1,0 +1,96 @@
+{
+  "SerializedFilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\obj\\Debug\\net7.0\\project.razor.json",
+  "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\BookmarkRepository.csproj",
+  "Configuration": {
+    "ConfigurationName": "MVC-3.0",
+    "LanguageVersion": "7.0",
+    "Extensions": [
+      {
+        "ExtensionName": "MVC-3.0"
+      }
+    ]
+  },
+  "ProjectWorkspaceState": {
+    "TagHelpers": [],
+    "CSharpLanguageVersion": 1100
+  },
+  "RootNamespace": "BookmarkRepository",
+  "Documents": [
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\Pages\\Index.razor",
+      "TargetPath": "Pages\\Index.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\_Imports.razor",
+      "TargetPath": "_Imports.razor",
+      "FileKind": "componentImport"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\Shared\\MainLayout.razor",
+      "TargetPath": "Shared\\MainLayout.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\Pages\\FileUpload2.razor",
+      "TargetPath": "Pages\\FileUpload2.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\Pages\\EditBookmarkView.razor",
+      "TargetPath": "Pages\\EditBookmarkView.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\Shared\\SurveyPrompt.razor",
+      "TargetPath": "Shared\\SurveyPrompt.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\Shared\\LoginDisplay.razor",
+      "TargetPath": "Shared\\LoginDisplay.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\Pages\\FileUpload1.razor",
+      "TargetPath": "Pages\\FileUpload1.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\Pages\\BookmarksView.razor",
+      "TargetPath": "Pages\\BookmarksView.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\Pages\\_Host.cshtml",
+      "TargetPath": "Pages\\_Host.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\Pages\\Error.cshtml",
+      "TargetPath": "Pages\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\App.razor",
+      "TargetPath": "App.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\Pages\\UploadBookmarksHtml.razor",
+      "TargetPath": "Pages\\UploadBookmarksHtml.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\Pages\\NewBookmarkView.razor",
+      "TargetPath": "Pages\\NewBookmarkView.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\paulc\\Documents\\GitHub\\BookmarkRepository\\BookmarkRepository\\Shared\\NavMenu.razor",
+      "TargetPath": "Shared\\NavMenu.razor",
+      "FileKind": "component"
+    }
+  ],
+  "SerializationFormat": "0.3"
+}

@@ -1,0 +1,164 @@
+﻿@page "/upload"
+@using BookmarkRepository.Data
+@using BookmarkRepository.Models
+@using HtmlAgilityPack;
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Logging
+@using System.Linq
+@using System.Net.Http.Headers
+@using System.Text.Json
+@inject BookmarkContext ApplicationDbContext
+@inject IHttpClientFactory ClientFactory
+@inject ILogger<FileUpload2> Logger
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider authenticationStateProvider
+<h1>Upload Files</h1>
+
+<div>
+    <label>
+        Upload files:
+        <InputFile OnChange="@HandleFileSelected" multiple />
+    </label>
+</div>
+<div>
+</div>
+<div>
+    <button @onclick="@HandleValidSubmit">Submit</button>
+</div>
+
+@if (files.Count > 0)
+{
+    <div class="card">
+        <div class="card-body">
+            <ul>
+                @foreach (var file in files)
+                {
+                    <li>
+                        File: @file.Name
+                        <br>
+                        @if (FileUpload(uploadResults, file.Name, Logger, out var result))
+                        {
+                            <span>
+                                Stored File Name: @result.StoredFileName
+                            </span>
+                        }
+                        else
+                        {
+                            <span>
+                                There was an error uploading the file
+                                (Error: @result.ErrorCode).
+                            </span>
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+
+@code {
+    private List<File> files = new();
+    private List<UploadResult> uploadResults = new();
+    private int maxAllowedFiles = 3;
+    private List<Bookmark> bookmarks = new();
+    private BookmarkService BookmarkService;
+    private System.Security.Claims.ClaimsPrincipal? user;
+    private string Username;
+    protected override async Task OnInitializedAsync()
+    {
+        BookmarkService = new BookmarkService(ApplicationDbContext);
+        user = (await authenticationStateProvider.GetAuthenticationStateAsync()).User;
+        Username = user.Identity.Name;
+
+    }
+
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        using var content = new MultipartFormDataContent();
+
+        foreach (var file in e.GetMultipleFiles())
+        {
+            StreamContent fileContent = new StreamContent(file.OpenReadStream());
+
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+
+            content.Add(
+                content: fileContent,
+                name: "\"files\"",
+                fileName: file.Name);
+
+        }
+        var asd = content;
+    }
+
+    private static bool FileUpload(IList<UploadResult> uploadResults,
+        string? fileName, ILogger<FileUpload2> logger, out UploadResult result)
+    {
+        result = uploadResults.SingleOrDefault(f => f.FileName == fileName) ?? new();
+
+        if (!result.Uploaded)
+        {
+            logger.LogInformation("{FileName} not uploaded (Err: 5)", fileName);
+            result.ErrorCode = 5;
+        }
+
+        return result.Uploaded;
+    }
+
+    private class File
+    {
+        public string? Name { get; set; }
+    }
+
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        bookmarks = new List<Bookmark>();
+        HtmlDocument HtmlDocument = new HtmlDocument();
+        using Stream? stream = e.File.OpenReadStream();
+        byte[] fileContentAsBytes = new byte[stream.Length];
+        await stream.ReadAsync(fileContentAsBytes);
+        string fileContentAsString = System.Text.Encoding.UTF8.GetString(fileContentAsBytes);
+        try
+        {
+            HtmlDocument.LoadHtml(fileContentAsString);
+        }
+        catch(Exception err)
+        {
+            var errMessage = err.Message;
+        }
+
+        IEnumerable<HtmlNode>
+            nodes = HtmlDocument.DocumentNode.Descendants("a")
+            .Where(n => n.Attributes["href"] != null && n.Attributes["href"].Value.StartsWith("http"));
+
+        //@context.User.Identity?.Name
+        //var contextUserIdentityName = context.User.Identity?.Name;
+
+
+        foreach (HtmlNode node in nodes)
+        {
+            Bookmark bookmark = new Bookmark()
+                {
+                    Username = Username,
+                    Name = node.InnerHtml.Trim(),
+                    Url = node.Attributes["href"].Value
+                };
+
+            bookmarks.Add(bookmark);
+        }
+        var asdfa = bookmarks;
+    }
+
+
+    private async Task HandleValidSubmit()
+    {
+        if (bookmarks != null)
+        {
+            await BookmarkService.UploadAsync(bookmarks);
+            NavigationManager.NavigateTo("/bookmarks");
+        }
+    }
+}

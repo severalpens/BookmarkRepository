@@ -1,0 +1,136 @@
+﻿@inject IBookmarkFilters Filters
+
+@if (CurrentBookmark is not null)
+{
+    <div class="row bookmark-detail">
+        <div class="col-1 text-right">
+            <a title="Edit" href="edit/@CurrentBookmark.Id">
+                &nbsp;📝&nbsp;
+            </a>
+            @if (CanDelete)
+            {
+                <span @onclick="DeleteRequestAsync"
+                      title="Delete" class="clickable red">❌</span>
+            }
+            else
+            {
+                <span>&nbsp;</span>
+            }
+            &nbsp;
+        </div>
+        <div class="col-2">
+            <a href="@ViewLink" alt="View Details"
+               title="View Details">
+                @Name
+            </a>
+        </div>
+        @if (!DeleteConfirmation)
+        {
+            <div class="col-3">@CurrentBookmark.Url</div>
+        }
+        else
+        {
+            <div class="col-9">
+                <DeletePrompt Confirmation="ConfirmAsync" />
+            </div>
+        }
+    </div>
+}
+@code {
+    private Bookmark _currentBookmark = new Bookmark();
+
+    /// <summary>
+    /// The <see cref="Bookmark"/> being rendered.
+    /// </summary>
+    [Parameter]
+    public Bookmark CurrentBookmark
+    {
+        get => _currentBookmark;
+        set
+        {
+            if (value is not null && !value.Equals(_currentBookmark))
+            {
+                _currentBookmark = value;
+                DeleteConfirmation = false;
+                Name = value.Name;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Event to raise when a bookmark delete is requested.
+    /// </summary>
+    [Parameter]
+    public EventCallback DeleteBookmark { get; set; }
+
+    /// <summary>
+    /// Overall wrapper of functionality.
+    /// </summary>
+    [CascadingParameter]
+    public GridWrapper? Wrapper { get; set; }
+
+    /// <summary>
+    /// Returns <c>true</c> if conditions for delete are met.
+    /// </summary>
+    private bool CanDelete => !DeleteConfirmation &&
+    (Wrapper?.DeleteRequestId == 0 ||
+    Wrapper?.DeleteRequestId == CurrentBookmark?.Id);
+
+    /// <summary>
+    /// Navigate to view.
+    /// </summary>
+    private string ViewLink => $"View/{CurrentBookmark?.Id}";
+
+    /// <summary>
+    /// Confirm the delete.
+    /// </summary>
+    private bool DeleteConfirmation { get; set; }
+
+    /// <summary>
+    /// Called based on confirmation.
+    /// </summary>
+    /// <param name="confirmed"><c>True</c> when confirmed</param>
+    /// <returns>A <see cref="Task"/>.</returns>
+    private async Task ConfirmAsync(bool confirmed)
+    {
+        if (confirmed)
+        {
+            await DeleteAsync();
+        }
+        else
+        {
+            DeleteConfirmation = false;
+
+            if (Wrapper is not null)
+            {
+                await Wrapper.DeleteRequested.InvokeAsync(0);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Set delete to true.
+    /// </summary>
+    private async Task DeleteRequestAsync()
+    {
+        if (Wrapper?.DeleteRequestId == 0)
+        {
+            DeleteConfirmation = true;
+            await Wrapper.DeleteRequested.InvokeAsync(CurrentBookmark.Id);
+        }
+    }
+
+    /// <summary>
+    /// Deletes the <see cref="Bookmark"/>.
+    /// </summary>
+    /// <returns>A <see cref="Task"/>.</returns>
+    private Task DeleteAsync()
+    {
+        return DeleteBookmark.InvokeAsync(this);
+    }
+
+    /// <summary>
+    /// Correctly formatted name.
+    /// </summary>
+    private string Name = "";
+}

@@ -1,0 +1,51 @@
+﻿@page "/bookmarks"
+@using BookmarkRepository.Data
+@using BookmarkRepository.Models
+@inject BookmarkContext ApplicationDbContext
+@inject AuthenticationStateProvider authenticationStateProvider
+
+<PageTitle>Bookmarks</PageTitle>
+
+<h1>Bookmarks</h1>
+
+
+@if (bookmarks == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Url</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bookmark in bookmarks)
+            {
+                <tr>
+                    <td>@bookmark.Name</td>
+                    <td><a href="@bookmark.Url" target="_blank">@bookmark.Url</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Bookmark>? bookmarks;
+    private System.Security.Claims.ClaimsPrincipal? user;
+    private string Username;
+
+    protected override async Task OnInitializedAsync()
+    {
+        BookmarkService BookmarkService = new BookmarkService(ApplicationDbContext);
+
+        user = (await authenticationStateProvider.GetAuthenticationStateAsync()).User;
+        Username = user.Identity.Name;
+
+        bookmarks = await BookmarkService.GetBookmarksAsync(Username);
+    }
+}
